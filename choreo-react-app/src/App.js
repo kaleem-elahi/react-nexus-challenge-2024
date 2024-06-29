@@ -8,7 +8,7 @@ const App = () => {
 
     useEffect(() => {
         if (state.isAuthenticated) {
-            axios.get('http://localhost:5000/todos')
+            axios.get('http://localhost:5050/todos')
                 .then(response => setTodos(response.data))
                 .catch(error => console.error('Error fetching todos:', error));
         }

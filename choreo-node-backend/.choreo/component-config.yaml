@@ -2,7 +2,7 @@ apiVersion: core.choreo.dev/v1beta1
 kind: ComponentConfig
 spec:
   inbound:
-    - name: Your Service
+    - name: Todo List Api
       port: 5050
       type: REST
       networkVisibility: Public
