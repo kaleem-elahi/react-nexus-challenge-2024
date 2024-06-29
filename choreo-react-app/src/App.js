@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { useAuthContext } from '@asgardeo/auth-react';
+import axios from 'axios';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    const { state, signIn, signOut } = useAuthContext();
+    const [todos, setTodos] = useState([]);
+
+    useEffect(() => {
+        if (state.isAuthenticated) {
+            axios.get('http://localhost:5000/todos')
+                .then(response => setTodos(response.data))
+                .catch(error => console.error('Error fetching todos:', error));
+        }
+    }, [state.isAuthenticated]);
+
+    return (
+        <div>
+            <h1>Todo App</h1>
+            {state.isAuthenticated ? (
+                <div>
+                    <p>Hello, {state.username}</p>
+                    <button onClick={() => signOut()}>Sign Out</button>
+                    <ul>
+                        {todos.map(todo => (
+                            <li key={todo.id}>{todo.text}</li>
+                        ))}
+                    </ul>
+                </div>
+            ) : (
+                <button onClick={() => signIn()}>Sign In</button>
+            )}
+        </div>
+    );
+};
 
 export default App;
