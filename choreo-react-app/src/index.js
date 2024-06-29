@@ -3,12 +3,25 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { AuthProvider} from "@asgardeo/auth-react";
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+
+const config = {
+  clientID: 'EHw0ePGwvrGkRKoVBtc3bsBOOWca',
+  baseUrl: 'https://api.asgardeo.io/t/kaleemelahi',
+  signInRedirectURL: 'http://localhost:3000/callback',
+  signOutRedirectURL: "https://localhost:3000/callback",
+  scope: [ "openid","profile" ]
+};
+
+
+root.render(<>
+<AuthProvider config={config}>
+  <App />
+</AuthProvider>
+</>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,0 +1,17 @@
+apiVersion: core.choreo.dev/v1beta1
+kind: ComponentConfig
+spec:
+  inbound:
+    - name: Your Service
+      port: 5050
+      type: REST
+      networkVisibility: Public
+      context: /yourservice
+      schemaFilePath: yourservice_openapi.yaml
+  outbound:
+    serviceReferences:
+      - name: choreo:///your/service/reference
+        connectionConfig: your-connection-config-id
+        env:
+          - from: ServiceURL
+            to: SERVICE_URL
